@@ -113,7 +113,8 @@ void insert_OrderNodeCB(PTRChuyenBay & lstCB, CHUYENBAY cb);
 int insertNodeCB(PTRChuyenBay& lstCB, CHUYENBAY cb);
 PTRChuyenBay searchBin_CB(PTRChuyenBay lstCB, char ma[]);
 void showCB(PTRChuyenBay lstCB);
-void hieuChinhCB(PTRChuyenBay& lstCB, LIST_MB lstMB);
+//int chinhCB(PTRChuyenBay& lstCB, LIST_MB lstMB, PTRChuyenBay p);
+int chinhHieuCB(PTRChuyenBay& lstCB, LIST_MB lstMB, PTRChuyenBay p);
 int rangBuocThoiGian(THOI_GIAN tg);
 int rangBuocGio(THOI_GIAN h);
 
@@ -153,7 +154,8 @@ const int soItem_MenuMB = 4;
 const int soItem_MenuCB = 4;
 const int soItem_MenuDV = 3;
 
-char* gdTimMa(LIST_MB lstMB, int type, string title);
+//char* gdTimMa(LIST_MB lstMB, int type, string title);
+char* gdTimMa(int type, string title);
 void khungGiaoDien();
 void veKhungNhap(int dai, int rong, int posx, int posy, string source = "");
 void khungNhapThongTin(int type, string title = "", string s1 = "", string s2 = "", string s3 = "", string s4 = "",

@@ -120,7 +120,9 @@ int delete_MB(LIST_MB& lstMB, int i){
 	return 1;
 }
 
-char* gdTimMa(LIST_MB lstMB, int type, string title) {
+//char* gdTimMa(LIST_MB lstMB, int type, string title)
+char* gdTimMa(int type, string title)
+{
 	khungNhapThongTin(type, title);
 
 	char temp[20] = { '\0' };
@@ -514,9 +516,163 @@ void showCB(PTRChuyenBay lstCB) {
 	
 }
 
-void hieuChinhCB(PTRChuyenBay &lstCB, LIST_MB lstMB)
+int chinhHieuCB(PTRChuyenBay& lstCB, LIST_MB lstMB, PTRChuyenBay p)
 {
+	khungNhapThongTin(SUA_CB, "HIEU CHINH CHUYEN BAY", "Ma chuyen bay:", "So hieu may bay:", "San bay den:", "Ngay khoi hanh:", "Gio khoi hanh:");
 	
+	
+	if (p == NULL)
+	{
+		return 0;
+	}
+		
+	gotoxy(COT + 1, DONGNHAP1 + 2);
+	rewind(stdin);
+	cout << p->data.maChuyenBay;
+	
+	mayBay chonMB;
+	do
+	{
+		gotoxy(COT + 1, DONGNHAP2 + 2);
+		cout << "                           ";
+		chonMB = menuDong_ChonMB(lstMB);
+		strcpy(p->data.soHieuMayBay, chonMB.soHieuMayBay);
+		if (chonMB.soHieuMayBay[0] == '\0') {
+			p->data.soHieuMayBay[0] = { '\0' };
+			gotoxy(COT + 1, DONGNHAP2 + 2);
+			rewind(stdin);
+			NhapMA(p->data.soHieuMayBay, 20);
+			int tontai = search_MB(lstMB, p->data.soHieuMayBay);
+			if (tontai == -1) {
+				hienThongBao("Khong co may bay nao mang so hieu nay!");
+			}
+			else if (p->data.soHieuMayBay[0] == '\0') {
+				hienThongBao("Chua nhap thong tin!");
+			}
+			else break;
+		}
+		else {
+			gotoxy(COT + 1, DONGNHAP2 + 2);
+			cout << p->data.soHieuMayBay;
+			break;
+		}
+		
+	} while (true);
+	
+	do
+	{
+		p->data.sanBayDen[0] = { '\0' };
+		gotoxy(COT + 1, DONGNHAP3 + 2);
+		cout << "                                     ";
+		gotoxy(COT + 1, DONGNHAP3 + 2);
+		NhapCHUOI_SO(p->data.sanBayDen, 50);
+		if (p->data.sanBayDen[0] == '\0') {
+			hienThongBao("Chua nhap thong tin!");
+		}
+		else
+			break;
+	} while (true);
+	
+	do
+	{
+		gotoxy(COT + 1, DONGNHAP4 + 2);
+		Nhap_SO(p->data.tgKhoiHanh.ngay, 2);
+	
+		gotoxy(COT + DAIKHUNGNHO + 1, DONGNHAP4 + 2);
+		Nhap_SO(p->data.tgKhoiHanh.thang, 2);
+	
+		gotoxy(COT + DAIKHUNGNHO * 2 + 1, DONGNHAP4 + 2);
+		Nhap_SO(p->data.tgKhoiHanh.nam, 4);
+		
+		if (rangBuocThoiGian(p->data.tgKhoiHanh) == -1)
+		{
+			break;
+		}
+		else
+		{
+			gotoxy(COT + 1, DONGNHAP4 + 2);
+			cout << "  ";
+			gotoxy(COT + DAIKHUNGNHO + 1, DONGNHAP4 + 2);
+			cout << "  ";
+			gotoxy(COT + DAIKHUNGNHO * 2 + 1, DONGNHAP4 + 2);
+			cout << "    ";
+		}
+	}
+	while (true);
+	
+	do
+	{
+		gotoxy(COT + 1, DONGNHAP5 + 2);
+		Nhap_SO(p->data.tgKhoiHanh.gio, 2);
+	
+		gotoxy(COT + DAIKHUNGNHO + 1, DONGNHAP5 + 2);
+		Nhap_SO(p->data.tgKhoiHanh.phut, 2);
+		
+		if (rangBuocGio(p->data.tgKhoiHanh) == -1)
+		{
+			break;
+		}
+		else
+		{
+			gotoxy(COT + 1, DONGNHAP5 + 2);
+			cout << "  ";
+			gotoxy(COT + DAIKHUNGNHO + 1, DONGNHAP5 + 2);
+			cout << "  ";
+		}
+	}
+	while (true);
+	
+//	do {
+//		gotoxy(COT + 1, DONGNHAP2 + 2);
+//		cout << "                      ";
+//		//lstMB.nodeMB[i]->data.loaiMayBay[0] = '\0';
+//		
+//		gotoxy(COT + 1, DONGNHAP2 + 2);
+//		rewind(stdin);
+//		NhapCHUOI_SO(lstMB.nodeMB[i]->data.loaiMayBay, 45);
+//		if (lstMB.nodeMB[i]->data.loaiMayBay[0] == '\0') {
+//			hienThongBao("Chua nhap thong tin!");
+//		}
+//		else break;
+//	} while (true);
+	
+//	do
+//	{
+//		gotoxy(COT + 1, DONGNHAP3 + 2);
+//		cout << "                      ";
+//		gotoxy(COT + 1, DONGNHAP3 + 2);
+//		Nhap_SO(lstMB.nodeMB[i]->data.soDay, 11);
+//		if (lstMB.nodeMB[i]->data.soDay == 0) {
+//			hienThongBao("Chua nhap thong tin!");
+//		}
+//		else {
+//			if (lstMB.nodeMB[i]->data.soDay > MAX_DAY || lstMB.nodeMB[i]->data.soDay < 0) {
+//				hienThongBao("So day phai < 10 va > 0");
+//			}
+//			else break;
+//		}
+//
+//	} while (true);
+//
+//	do
+//	{
+//		gotoxy(COT + 1, DONGNHAP4 + 2);
+//		cout << "                      ";
+//		gotoxy(COT + 1, DONGNHAP4 + 2);
+//		Nhap_SO(lstMB.nodeMB[i]->data.soDong, 11);
+//		if (lstMB.nodeMB[i]->data.soDong == 0) {
+//			hienThongBao("Chua nhap thong tin!");
+//		}
+//		else {
+//			if (lstMB.nodeMB[i]->data.soDong > MAX_DONG || lstMB.nodeMB[i]->data.soDong < 0) {
+//				hienThongBao("So day phai < 16 va > 0");
+//			}
+//			else break;
+//		}
+//	} while (true);
+
+	
+	return 1;
 }
 
 //========== doc xuat file ===============

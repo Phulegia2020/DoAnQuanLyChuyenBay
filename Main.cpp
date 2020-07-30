@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 #include "ThuVien.h"
 
 char tdChinh[soItem_MenuChinh][100] = { "1. Quan ly may bay                                     ",
@@ -68,6 +68,7 @@ int main() {
 					do
 					{
 						strcpy(ma, gdTimMa(lstMB, 0, "XOA MAY BAY"));
+						//strcpy(ma, gdTimMa(lstMB, "XOA MAY BAY"));
 						tontai = search_MB(lstMB, ma);
 						if (tontai == -1)
 							hienThongBao("Khong tim thay so hieu nay!");
@@ -94,6 +95,7 @@ int main() {
 					do
 					{
 						strcpy(ma, gdTimMa(lstMB, 0, "HIEU CHINH MAY BAY"));
+						//strcpy(ma, gdTimMa(0, "HIEU CHINH MAY BAY"));
 						tontai = search_MB(lstMB, ma);
 						if (tontai == -1)
 							hienThongBao("Khong tim thay so hieu nay!");
@@ -152,7 +154,31 @@ int main() {
 				}
 				case 3:
 				{
+					char ma[20] = { '\0' };
+					//int tontai = -1;
+					PTRChuyenBay p = new NodeChuyenBay;
+					do
+					{
+						strcpy(ma, gdTimMa(lstMB, 0, "HIEU CHINH CHUYEN BAY"));
+						//tontai = search_MB(lstMB, ma);
+						p = searchBin_CB(lstCB, ma);
+						if (p == NULL)
+							hienThongBao("Khong tim thay ma chuyen bay nay!");
+						else break;
+					} while (true);
 					
+					int hieuChinh;
+					hieuChinh = chinhHieuCB(lstCB, lstMB, p);
+					if (hieuChinh == 1) {
+						hienThongBao("Hieu chinh thanh cong!");
+						int luu = saveCB(lstCB);
+					}
+					else {
+						hienThongBao("Hieu chinh that bai!");
+					}
+					Normal();
+					system("cls");
+					break;
 				}
 				case soItem_MenuCB:
 				{
